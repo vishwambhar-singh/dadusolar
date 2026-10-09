@@ -7,7 +7,28 @@ import { getAssetUrl } from './lib/utils';
 const C = { gold: '#f1b84b', green: '#91ad63', ink: '#111412', soft: '#f4f5f0', slate: '#6d756d' };
 
 function useReveal() { const [location] = useLocation(); useEffect(() => { const els = document.querySelectorAll('.reveal'); const io = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible')), { threshold: .12 }); els.forEach(el => io.observe(el)); return () => io.disconnect(); }, [location]); }
-function Logo() { return <Link href="/" className="brand"><img className="brand-logo" src={getAssetUrl('/manus-storage/dadu-solar-logo_5853dbb0.png')} alt="Dadu Solar" /></Link>; }
+function Logo() {
+  const [imgError, setImgError] = useState(false);
+  return (
+    <Link href="/" className="brand">
+      {!imgError ? (
+        <img
+          className="brand-logo"
+          src={getAssetUrl('/manus-storage/dadu-solar-logo_5853dbb0.png')}
+          onError={() => setImgError(true)}
+          alt="Dadu Solar"
+        />
+      ) : (
+        <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="8" fill="#111412" />
+          <circle cx="18" cy="18" r="7" fill="#f1b84b" />
+          <path d="M18 4V8M18 28V32M4 18H8M28 18H32M8.1 8.1L10.9 10.9M25.1 25.1L27.9 27.9M8.1 27.9L10.9 25.1M25.1 10.9L27.9 8.1" stroke="#91ad63" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      )}
+      <span className="brand-title">DADU <b>SOLAR</b></span>
+    </Link>
+  );
+}
 function ScrollToTop() {
   const [location] = useLocation();
 
