@@ -81,5 +81,24 @@ function Projects() { const [filter, setFilter] = useState('All'); const cats = 
 function ProjectDetail() { const [, params] = useRoute('/projects/:slug'); const project = siteData.projects.find(item => slugify(item.title) === params?.slug); if (!project) return <NotFound />; return <><Hero compact label={`${project.category} · project profile`} title={project.title} copy={project.description} image={project.image} /><section className="section detail-section"><div className="container detail-grid"><div><SectionIntro kicker="Project profile" title="A practical system, shaped by the place it serves." copy="This reference profile illustrates the kind of context Dadu Solar brings into the conversation before design and delivery begin." /><div className="detail-facts"><span>{project.location}</span><span>{project.capacity}</span></div><Button>Discuss a similar project</Button></div><div className="detail-image"><img src={project.image} alt={project.title} /></div></div></section></>; }
 function Contact() { const [sent, setSent] = useState(false); useEffect(() => { if (window.location.hash === '#quote-form') window.setTimeout(() => document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80); }, []); return <><Hero compact label="Start a conversation" title="Let's build your solar future." copy="Share a little about your property and energy goals. Our team will review the context and get back to you." image={getAssetUrl('/manus-storage/dadu-residential-solar_a5a9da2f.jpg')} /><section className="section contact-section" id="quote-form"><div className="container contact-grid"><div><SectionIntro kicker="Get in touch" title="Tell us where you want to go." copy="No hard sell. Just a thoughtful first conversation about what might be possible." /><div className="contact-points"><a href={`mailto:${siteData.contact.email}`}><Mail size={18} />{siteData.contact.email}</a><a href={`tel:${siteData.contact.phone}`}><Phone size={18} />{siteData.contact.phone}</a><span><MapPin size={18} />{siteData.contact.address}</span></div></div><div className="form-wrap">{sent ? <div className="success"><CircleCheck size={32} /><p className="eyebrow">Enquiry prepared</p><h3>Thank you.</h3><p>Your email app should now be open with the enquiry addressed to {siteData.contact.email}.</p><Button href="/">Back to home</Button></div> : <EnquiryForm onSent={() => setSent(true)} />}</div></div></section></>; }
 function NotFound() { return <div className="not-found"><p className="eyebrow">404</p><h1>That page is off-grid.</h1><Button href="/">Back home</Button></div>; }
-function App() { const base = import.meta.env.BASE_URL ? import.meta.env.BASE_URL.replace(/\/$/, '') : ''; return <Router base={base}><Layout><Switch><Route path="/" component={Home} /><Route path="/about" component={About} /><Route path="/solutions/:id" component={SolutionDetail} /><Route path="/solutions" component={Solutions} /><Route path="/projects/:slug" component={ProjectDetail} /><Route path="/projects" component={Projects} /><Route path="/contact" component={Contact} /><Route component={NotFound} /></Switch></Layout></Router>; }
+import { useHashLocation } from 'wouter/use-hash-location';
+
+function App() {
+  return (
+    <Router hook={useHashLocation}>
+      <Layout>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/solutions/:id" component={SolutionDetail} />
+          <Route path="/solutions" component={Solutions} />
+          <Route path="/projects/:slug" component={ProjectDetail} />
+          <Route path="/projects" component={Projects} />
+          <Route path="/contact" component={Contact} />
+          <Route component={NotFound} />
+        </Switch>
+      </Layout>
+    </Router>
+  );
+}
 export default App;
