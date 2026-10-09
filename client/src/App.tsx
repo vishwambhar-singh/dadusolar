@@ -12,7 +12,7 @@ function Logo() {
     <Link href="/" className="brand">
       <img
         className="brand-logo"
-        src={getAssetUrl('/logo.png')}
+        src={getAssetUrl('/dadu-logo-v2.png')}
         alt="Dadu Solar"
       />
     </Link>
