@@ -12,7 +12,7 @@ export const siteData = {
     address: 'India',
   },
   stats: [
-    ['10+', 'Years of industry experience'],
+    ['13+', 'Years of industry experience'],
     ['500+', 'Installations'],
     ['10 MW+', 'Clean energy capacity'],
     ['95%', 'Customer satisfaction'],

@@ -15,6 +15,7 @@ function Logo() {
         src={getAssetUrl('/dadu-logo-v2.png')}
         alt="Dadu Solar"
       />
+      <span className="brand-title">DADU <b>SOLAR</b></span>
     </Link>
   );
 }
